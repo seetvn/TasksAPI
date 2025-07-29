@@ -27,4 +27,6 @@ class TaskRead(BaseModel):
     created_at: datetime
 
 class TaskUpdate(BaseModel):
+    title: Optional[str] = None
+    description: Optional[str] = None
     status: TaskStatus

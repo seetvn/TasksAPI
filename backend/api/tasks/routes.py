@@ -28,11 +28,16 @@ async def get_task(task_id: int, current_user: User = Depends(get_current_user))
 
 @router.put("/{task_id}", response_model=TaskRead)
 async def update_task(task_id: int, update: TaskUpdate, current_user: User = Depends(get_current_user)):
-    task = await utils.update_task_status_for_user(task_id, current_user.id, update)
+    if update.status is None:
+        raise HTTPException(status_code=400, detail="Status is required to update task status")
+    
+    task = await utils.update_task_status_for_user(task_id, current_user.id, update.status)
     if not task:
         raise HTTPException(status_code=404, detail="Task not found")
+    
     print("Task updated:", task)
     return task
+
 
 
 @router.delete("/{task_id}")
