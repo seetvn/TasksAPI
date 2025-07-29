@@ -1,0 +1,5 @@
+.env
+*.db
+*.cpython-*
+__pycache__/
+*.pyc
